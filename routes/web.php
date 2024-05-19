@@ -23,3 +23,9 @@ Route::get('/home',[HomeController::class,'index']);
 
 //Paginas solo para admins
 Route::get('/adminpage',[HomeController::class,'page'])->middleware(['auth','admin']);
+
+
+//ESTUDIANTE
+Route::middleware(['auth:sanctum', 'verified'])->get('/construction-form', function () {
+    return view('obra.construction-form');
+})->name('construction.form');
