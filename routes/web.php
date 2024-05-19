@@ -1,6 +1,7 @@
 <?php
 
 use Illuminate\Support\Facades\Route;
+use App\Http\Controllers\HomeController;
 
 Route::get('/', function () {
     return view('welcome');
@@ -15,3 +16,10 @@ Route::middleware([
         return view('dashboard');
     })->name('dashboard');
 });
+
+
+//Pagina de inicio
+Route::get('/home',[HomeController::class,'index']);
+
+//Paginas solo para admins
+Route::get('/adminpage',[HomeController::class,'page'])->middleware(['auth','admin']);
