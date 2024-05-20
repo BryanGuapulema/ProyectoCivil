@@ -2,6 +2,7 @@
 
 use Illuminate\Support\Facades\Route;
 use App\Http\Controllers\HomeController;
+use App\Http\Controllers\ObraController;
 
 Route::get('/', function () {
     return view('welcome');
@@ -29,3 +30,6 @@ Route::get('/adminpage',[HomeController::class,'page'])->middleware(['auth','adm
 Route::middleware(['auth:sanctum', 'verified'])->get('/construction-form', function () {
     return view('obra.construction-form');
 })->name('construction.form');
+
+//OBRA
+Route::resource('obras', ObraController::class);
