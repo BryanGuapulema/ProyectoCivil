@@ -27,8 +27,9 @@ Route::get('/adminpage',[HomeController::class,'page'])->middleware(['auth','adm
 
 
 //ESTUDIANTE
+//Era para llenar el formulario de obras pero ya me di cuenta que podia hacer eso en el crud
 Route::middleware(['auth:sanctum', 'verified'])->get('/construction-form', function () {
-    return view('obra.construction-form');
+    return view('obras.construction-form');
 })->name('construction.form');
 
 //OBRA

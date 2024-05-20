@@ -14,7 +14,7 @@ class CreateObrasTable extends Migration
             $table->string('nombre_de_obra');
             $table->decimal('latitud', 10, 7)->nullable();
             $table->decimal('longitud', 10, 7)->nullable();
-            $table->string('nombre_estudiante');
+            $table->integer('id_estudiante');
             $table->date('fecha');
             $table->timestamps();
         });

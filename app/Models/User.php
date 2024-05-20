@@ -9,6 +9,7 @@ use Illuminate\Notifications\Notifiable;
 use Laravel\Fortify\TwoFactorAuthenticatable;
 use Laravel\Jetstream\HasProfilePhoto;
 use Laravel\Sanctum\HasApiTokens;
+use App\Models\Obra;
 
 class User extends Authenticatable
 {
@@ -62,4 +63,9 @@ class User extends Authenticatable
             'password' => 'hashed',
         ];
     }
+
+    public function obras()
+    {
+        return $this->belongsToMany(Obra::class);
+    }    
 }

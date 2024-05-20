@@ -32,8 +32,13 @@
                         </div>                        
 
                         <div class="mb-4">
-                            <x-label for="nombre_estudiante" value="{{ __('Nombre del Estudiante') }}" class="text-gray-700 dark:text-gray-300"/>
-                            <x-input id="nombre_estudiante" type="text" name="nombre_estudiante" required class="mt-1 block w-full dark:bg-gray-900 dark:text-gray-300"/>
+                            <x-label for="id_estudiante" value="{{ __('Nombre del Estudiante') }}" class="text-gray-700 dark:text-gray-300"/>
+                            <select id="id_estudiante" name="id_estudiante" required class="block mt-1 w-full dark:bg-gray-900 dark:text-gray-300">
+                                <option value="" disabled selected>Seleccione el nombre del estudiante</option>
+                                @foreach ($estudiantes as $usuario)
+                                    <option value="{{ $usuario->id }}">{{ $usuario->name }}</option>
+                                @endforeach
+                            </select>
                         </div>
 
                         <div class="mb-4">

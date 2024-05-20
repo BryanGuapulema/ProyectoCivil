@@ -12,15 +12,16 @@ return new class extends Migration
     public function up(): void
     {
         Schema::create('obra_user', function (Blueprint $table) {
-            $table->id();
-            $table->timestamps();
+            $table->foreignId('obra_id')->constrained()->onDelete('cascade');
+            $table->foreignId('user_id')->constrained()->onDelete('cascade');            
+            $table->primary(['obra_id', 'user_id']);
         });
     }
 
     /**
      * Reverse the migrations.
      */
-    public function down(): void
+    public function down()
     {
         Schema::dropIfExists('obra_user');
     }

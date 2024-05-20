@@ -4,6 +4,7 @@ namespace App\Models;
 
 use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Database\Eloquent\Model;
+use App\Models\User;
 
 class Obra extends Model
 {
@@ -15,7 +16,12 @@ class Obra extends Model
         'nombre_de_obra',
         'latitud',
         'longitud',
-        'nombre_estudiante',
+        'id_estudiante',
         'fecha',
     ];
+
+    public function users()
+    {
+        return $this->belongsToMany(User::class);
+    }
 }
