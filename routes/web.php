@@ -34,3 +34,9 @@ Route::middleware(['auth:sanctum', 'verified'])->get('/construction-form', funct
 
 //OBRA
 Route::resource('obras', ObraController::class);
+
+
+//RUBROM2
+Route::get('/rubros/create', function () {
+    return view('rubros.create');
+})->name('rubros.create');

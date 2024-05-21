@@ -6,16 +6,24 @@
         </h2>
     </x-slot>
 
+    
+
     <div class="py-6">
         <div class="max-w-7xl mx-auto sm:px-6 lg:px-8">
-            <div class="bg-white dark:bg-gray-800 overflow-hidden shadow-xl sm:rounded-lg">
+            <div class="mb-4">
+                <a href="{{ route('obras.create') }}" class="bg-gray-500 hover:bg-gray-700 text-white font-bold py-2 px-4 rounded-full focus:outline-none focus:shadow-outline">
+                    {{ __('Registrar Nueva Obra') }}
+                </a>
+            </div>
+
+            <div class="bg-white dark:bg-gray-800 overflow-hidden shadow-xl sm:rounded-lg">                    
                 <div class="p-6 bg-white dark:bg-gray-800 border-b border-gray-200 dark:border-gray-700">
                     @if (session('success'))
                         <div class="bg-green-500 text-white p-4 rounded mb-4">
                             {{ session('success') }}
                         </div>
-                    @endif
-
+                    @endif                    
+                                        
                     <div class="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-6">
                         @foreach ($obras as $obra)
                             <div class="bg-white dark:bg-gray-700 rounded-lg shadow-lg p-6 flex flex-col justify-between">

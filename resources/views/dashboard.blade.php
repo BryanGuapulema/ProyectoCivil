@@ -19,7 +19,7 @@
                     </div>
 
                     <div class="mt-8 flex justify-center">
-                        <a href="{{ route('obras.create') }}" class="bg-blue-500 dark:bg-blue-700 text-white font-bold py-2 px-4 rounded">
+                        <a href="{{ route('obras.index') }}" class="bg-blue-500 dark:bg-blue-700 text-white font-bold py-2 px-4 rounded">
                             Go to OBRA
                         </a>
                     </div>
