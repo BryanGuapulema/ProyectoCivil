@@ -14,7 +14,8 @@ class RubroM2Controller extends Controller
      */
     public function index()
     {
-        //
+        $rubrosM2 = RubroM2::all();
+        return view('rubros.m2.index', compact('rubrosM2'));
     }
 
     /**
@@ -41,11 +42,18 @@ class RubroM2Controller extends Controller
             'cantidad' => 'required|numeric',
             'area' => 'required|numeric',
             'tiempo' => 'required|numeric',
+            'eo_e2' => 'required|numeric',
+            'eo_d2' => 'required|numeric',
+            'eo_c2' => 'required|numeric',
+            'eo_c1' => 'required|numeric',
+            'eo_b3' => 'required|numeric',
+            'eo_b1' => 'required|numeric',
+            'grupo_i_eo_c1' => 'required|numeric',
+            'grupo_ii_eo_c2' => 'required|numeric',
             'total_personas' => 'required|integer',
             'rendimiento' => 'required|numeric',
             'productividad' => 'required|numeric',
-            'evidencia' => 'required|image|mimes:jpeg,png,jpg,gif|max:2048',
-            
+            'evidencia' => 'required|image|mimes:jpeg,png,jpg,gif|max:2048',            
         ]);
 
         // Guardar la imagen en la carpeta storage
@@ -61,6 +69,14 @@ class RubroM2Controller extends Controller
         $rubro->cantidad = $validatedData['cantidad'];
         $rubro->area = $validatedData['area'];
         $rubro->tiempo = $validatedData['tiempo'];
+        $rubro->eo_e2 = $validatedData['eo_e2'];
+        $rubro->eo_d2 = $validatedData['eo_d2'];
+        $rubro->eo_c2 = $validatedData['eo_c2'];
+        $rubro->eo_c1 = $validatedData['eo_c1'];
+        $rubro->eo_b3 = $validatedData['eo_b3'];
+        $rubro->eo_b1 = $validatedData['eo_b1'];
+        $rubro->grupo_i_eo_c1 = $validatedData['grupo_i_eo_c1'];
+        $rubro->grupo_ii_eo_c2 = $validatedData['grupo_ii_eo_c2'];
         $rubro->total_personas = $validatedData['total_personas'];
         $rubro->rendimiento = $validatedData['rendimiento'];
         $rubro->productividad = $validatedData['productividad'];
