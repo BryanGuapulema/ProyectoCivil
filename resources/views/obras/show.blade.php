@@ -101,11 +101,12 @@
         document.getElementById('close-popup-btn').addEventListener('click', function() {
             document.getElementById('popup-modal').classList.add('hidden');
         });
-
-        // Redirigir a obras.create al presionar un botón del pop-up
+    
         document.getElementById('btn-m2').addEventListener('click', function() {
-            window.location.href = "{{ route('rubros.create') }}";
+            var obraId = "{{ $obra->id }}";
+            window.location.href = "{{ route('rubros_m2.create', ['obra_id' => ':obra_id']) }}".replace(':obra_id', obraId);
         });
+
 
         document.getElementById('btn-m3').addEventListener('click', function() {
             window.location.href = "{{ route('obras.create') }}";

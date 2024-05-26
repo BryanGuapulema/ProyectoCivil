@@ -3,7 +3,8 @@
 use Illuminate\Support\Facades\Route;
 use App\Http\Controllers\HomeController;
 use App\Http\Controllers\ObraController;
-use App\Http\Controllers\RubroController;
+use App\Http\Controllers\RubroM2Controller;
+
 use App\Http\Controllers\ObreroController;
 
 
@@ -40,7 +41,11 @@ Route::resource('obras', ObraController::class);
 
 
 //RUBROM2
-Route::resource('rubros', RubroController::class);
+Route::resource('rubros_m2', RubroM2Controller::class);
+Route::get('rubros_m2/create/{obra_id}', [RubroM2Controller::class, 'create'])->name('rubros_m2.create');
+
+
+
 
 //InfoObreros
 Route::resource('obreros', ObreroController::class);

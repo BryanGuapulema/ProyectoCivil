@@ -24,4 +24,9 @@ class Obra extends Model
     {
         return $this->belongsToMany(User::class);
     }
+
+    public function rubros_m2()
+    {
+        return $this->hasMany(RubroM2::class);
+    }
 }
