@@ -49,6 +49,15 @@
                         <div class="mt-2 text-sm text-gray-600 dark:text-gray-300">Total Personas (H): {{ $rubroM2->total_personas  }}</div>
                         <div class="mt-2 text-sm text-gray-600 dark:text-gray-300">Rendimiento (m²/h): {{ $rubroM2->rendimiento  }}</div>
                         <div class="mt-2 text-sm text-gray-600 dark:text-gray-300">Productividad (m²/h*H): {{ $rubroM2->productividad  }}</div>                        
+
+                        <div class="mt-4 flex justify-end">
+                            <a href="{{ route('rubros_m2.edit', $rubroM2->id) }}" class="bg-blue-500 hover:bg-blue-700 text-white font-bold py-2 px-4 rounded-full mr-2">Editar</a>
+                            <form action="{{ route('rubros_m2.destroy', $rubroM2->id) }}" method="POST">
+                                @csrf
+                                @method('DELETE')
+                                <button type="submit" class="bg-red-500 hover:bg-red-700 text-white font-bold py-2 px-4 rounded-full">Eliminar</button>
+                            </form>
+                        </div>
                     </div>
                 </div>
                 @endforeach

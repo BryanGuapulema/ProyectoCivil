@@ -24,22 +24,22 @@
 
                         <div class="mb-4">
                             <x-label for="ancho" value="{{ __('Ancho (m)') }}" class="text-gray-700 dark:text-gray-300"/>
-                            <x-input id="ancho" type="number" step="0.01" name="ancho" required class="mt-1 block w-full dark:bg-gray-900 dark:text-gray-300"/>
+                            <x-input id="ancho" type="number" value="0" step="0.01" name="ancho" required class="mt-1 block w-full dark:bg-gray-900 dark:text-gray-300"/>
                         </div>
 
                         <div class="mb-4">
                             <x-label for="longitud" value="{{ __('Longitud (m)') }}" class="text-gray-700 dark:text-gray-300"/>
-                            <x-input id="longitud" type="number" step="0.01" name="longitud" required class="mt-1 block w-full dark:bg-gray-900 dark:text-gray-300"/>
+                            <x-input id="longitud" type="number" value="0" step="0.01" name="longitud" required class="mt-1 block w-full dark:bg-gray-900 dark:text-gray-300"/>
                         </div>
 
                         <div class="mb-4">
                             <x-label for="cantidad" value="{{ __('Cantidad (u)') }}" class="text-gray-700 dark:text-gray-300"/>
-                            <x-input id="cantidad" type="number" step="0.01" name="cantidad" required class="mt-1 block w-full dark:bg-gray-900 dark:text-gray-300"/>
+                            <x-input id="cantidad" type="number" step="0.01" value="0" name="cantidad" required class="mt-1 block w-full dark:bg-gray-900 dark:text-gray-300"/>
                         </div>
 
                         <div class="mb-4">
                             <x-label for="area" value="{{ __('Área (m²)') }}" class="text-gray-700 dark:text-gray-300"/>
-                            <x-input id="area" type="number" step="0.01" name="area" required class="mt-1 block w-full dark:bg-gray-900 dark:text-gray-300"/>
+                            <x-input id="area" type="number" step="0.01" name="area" readonly required class="mt-1 block w-full dark:bg-gray-900 dark:text-gray-300"/>
                         </div>
 
                         <div class="mb-4">
@@ -157,17 +157,29 @@
 
     <script>
         document.addEventListener('DOMContentLoaded', function() {
-            // Seleccionar todos los campos de categorías de obreros
+            
             const camposObreros = document.querySelectorAll('[name^="eo_"], #grupo_i_eo_c1, #grupo_ii_eo_c2');
+            const anchoInput = document.getElementById('ancho');
+            const longitudInput = document.getElementById('longitud');
+            const cantidadInput = document.getElementById('cantidad');
             const areaInput = document.getElementById('area');
-            const tiempoInput = document.getElementById('tiempo');
-            //const totalPersonasInput = document.getElementById('total_personas');
+            const tiempoInput = document.getElementById('tiempo');            
             const rendimientoInput = document.getElementById('rendimiento');
-            const productividadInput = document.getElementById('productividad');
-
-            // Seleccionar el campo Total de personas
+            const productividadInput = document.getElementById('productividad');            
             const totalPersonas = document.getElementById('total_personas');
 
+            // Función para calcular el area
+            function calcularArea() {
+                const ancho = parseFloat(anchoInput.value) || 0;
+                const longitud = parseFloat(longitudInput.value) || 0;
+                const cantidad = parseFloat(cantidadInput.value) || 0;
+                const area = ancho * longitud * cantidad;
+                document.getElementById('area').value = area.toFixed(2);
+                calcularRendimiento();
+                calcularProductividad();
+            }
+            
+            
             // Función para calcular el total de personas
             function calcularTotalPersonas() {
                 let total = 0;
@@ -195,26 +207,24 @@
             }
 
             // Función para calcular la productividad
-            function calcularProductividad() {
-                const area = parseFloat(areaInput.value) || 0;
-                const tiempo = parseFloat(tiempoInput.value) || 0;
+            function calcularProductividad() {                
+                const rendimiento = parseFloat(rendimientoInput.value) || 0;
                 const tPersonas = parseFloat(totalPersonas.value) || 0;
-                const divisor = tiempo * tPersonas;
-                if (divisor === 0) {
+                
+                if (tPersonas === 0) {
                     productividadInput.value = 0;
                 } else {
-                    productividadInput.value = (area / divisor).toFixed(2);
+                    productividadInput.value = (rendimiento / tPersonas).toFixed(2);
                 }
             }
 
-             // Calcular el rendimiento cuando cambie el valor del área o el tiempo
-            areaInput.addEventListener('input', calcularRendimiento);
+             // campos calculados cuando se modifican los campos principales
+            anchoInput.addEventListener('input', calcularArea);
+            longitudInput.addEventListener('input', calcularArea);
+            cantidadInput.addEventListener('input', calcularArea);
             tiempoInput.addEventListener('input', calcularRendimiento);
-
-            // Calcular la productividad cuando cambie el valor del área, el tiempo o el total de personas
-            areaInput.addEventListener('input', calcularProductividad);
             tiempoInput.addEventListener('input', calcularProductividad);
-            totalPersonas.addEventListener('input', calcularProductividad);
+            
 
 
             
