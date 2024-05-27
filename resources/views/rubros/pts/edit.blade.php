@@ -1,7 +1,7 @@
 <x-app-layout>
     <x-slot name="header">
         <h2 class="font-semibold text-xl text-gray-800 dark:text-gray-200 leading-tight">
-            {{ __('Editar Rubro m3') }}
+            {{ __('Editar Rubro pts') }}
         </h2>
     </x-slot>
 
@@ -9,7 +9,7 @@
         <div class="max-w-7xl mx-auto sm:px-6 lg:px-8">
             <div class="bg-white dark:bg-gray-800 overflow-hidden shadow-xl sm:rounded-lg">
                 <div class="p-6 sm:px-20 bg-white dark:bg-gray-800 border-b border-gray-200 dark:border-gray-700">
-                    <form method="POST" action="{{ route('rubros_m2.update', $rubro->id) }}" enctype="multipart/form-data">
+                    <form method="POST" action="{{ route('rubros_pts.update', $rubro->id) }}" enctype="multipart/form-data">
                         @csrf
                         @method('PUT')
 
@@ -24,40 +24,20 @@
                         </div>
 
                         <div class="mb-4">
-                            <x-label for="b" value="{{ __('b (m)') }}" class="text-gray-700 dark:text-gray-300"/>
-                            <x-input id="b" type="number" value="{{ $rubro->b }}" step="0.01" name="b" required class="mt-1 block w-full dark:bg-gray-900 dark:text-gray-300"/>
-                        </div>
-
-                        <div class="mb-4">
-                            <x-label for="h" value="{{ __('h (m)') }}" class="text-gray-700 dark:text-gray-300"/>
-                            <x-input id="h" type="number" value="{{ $rubro->h }}" step="0.01" name="h" required class="mt-1 block w-full dark:bg-gray-900 dark:text-gray-300"/>
-                        </div>
-
-                        <div class="mb-4">
-                            <x-label for="l" value="{{ __('l (m)') }}" class="text-gray-700 dark:text-gray-300"/>
-                            <x-input id="l" type="number" value="{{ $rubro->l }}" step="0.01" name="l" required class="mt-1 block w-full dark:bg-gray-900 dark:text-gray-300"/>
-                        </div>
+                            <x-label for="diametro" value="{{ __('diametro') }}" class="text-gray-700 dark:text-gray-300"/>
+                            <select id="diametro" name="diametro" required class="block mt-1 w-full dark:bg-gray-900 dark:text-gray-300">
+                                <option value="" disabled>Seleccione un diametro</option>
+                                <option value="Opción 1" {{ $rubro->diametro == 'diametro 1' ? 'selected' : '' }}>diametro 1</option>
+                                <option value="Opción 2" {{ $rubro->diametro == 'diametro 2' ? 'selected' : '' }}>diametro 2</option>
+                                <option value="Opción 3" {{ $rubro->diametro == 'diametro 3' ? 'selected' : '' }}>diametro 3</option>
+                            </select>
+                        </div>                        
 
                         <div class="mb-4">
                             <x-label for="cantidad" value="{{ __('Cantidad (u)') }}" class="text-gray-700 dark:text-gray-300"/>
                             <x-input id="cantidad" type="number" step="0.01" value="{{ $rubro->cantidad }}" name="cantidad" required class="mt-1 block w-full dark:bg-gray-900 dark:text-gray-300"/>
                         </div>
-
-                        <div class="mb-4">
-                            <x-label for="hlosa" value="{{ __('hlosa (m)') }}" class="text-gray-700 dark:text-gray-300"/>
-                            <x-input id="hlosa" type="number" step="0.01" value="{{ $rubro->hlosa }}" name="hlosa" required class="mt-1 block w-full dark:bg-gray-900 dark:text-gray-300"/>
-                        </div>
-
-                        <div class="mb-4">
-                            <x-label for="factor_conversion" value="{{ __('factor_conversion (m)') }}" class="text-gray-700 dark:text-gray-300"/>
-                            <x-input id="factor_conversion" type="number" step="0.01" value="{{ $rubro->factor_conversion }}" name="factor_conversion" required class="mt-1 block w-full dark:bg-gray-900 dark:text-gray-300"/>
-                        </div>
-
-                        <div class="mb-4">
-                            <x-label for="volumen" value="{{ __('Área (m²)') }}" class="text-gray-700 dark:text-gray-300"/>
-                            <x-input id="volumen" type="number" step="0.01" value="{{ $rubro->volumen }}" name="volumen" readonly required class="mt-1 block w-full dark:bg-gray-900 dark:text-gray-300"/>
-                        </div>
-
+                       
                         <div class="mb-4">
                             <x-label for="tiempo" value="{{ __('Tiempo (h)') }}" class="text-gray-700 dark:text-gray-300"/>
                             <x-input id="tiempo" type="number" step="0.01" value="{{ $rubro->tiempo }}" name="tiempo" required class="mt-1 block w-full dark:bg-gray-900 dark:text-gray-300"/>
@@ -157,7 +137,7 @@
                             <x-label for="evidencia" value="{{ __('Evidencia') }}" class="text-gray-700 dark:text-gray-300"/>
                             <input type="file" id="evidencia" name="evidencia" class="mt-1 block w-full dark:bg-gray-900 dark:text-gray-300"/>
                             @if($rubro->evidencia)
-                                <img src="{{ asset('storage/evidencias/rubrosm3/' . $rubro->evidencia) }}" alt="Evidencia actual" class="mt-4 rounded-lg">
+                                <img src="{{ asset('storage/evidencias/rubrospts/' . $rubro->evidencia) }}" alt="Evidencia actual" class="mt-4 rounded-lg">
                             @endif
                         </div>
 
@@ -175,26 +155,12 @@
     <script>
         document.addEventListener('DOMContentLoaded', function() {
             
-            const camposObreros = document.querySelectorAll('[name^="eo_"], #grupo_i_eo_c1, #grupo_ii_eo_c2');
-            const bInput = document.getElementById('b');
-            const hInput = document.getElementById('h');
-            const lInput = document.getElementById('l');            
-            const volumenInput = document.getElementById('volumen');
+            const camposObreros = document.querySelectorAll('[name^="eo_"], #grupo_i_eo_c1, #grupo_ii_eo_c2');            
+            const cantidadInput = document.getElementById('cantidad');
             const tiempoInput = document.getElementById('tiempo');            
             const rendimientoInput = document.getElementById('rendimiento');
             const productividadInput = document.getElementById('productividad');            
-            const totalPersonas = document.getElementById('total_personas');
-
-            // Función para calcular el volumen
-            function calcularvolumen() {
-                const b = parseFloat(bInput.value) || 0;
-                const h = parseFloat(hInput.value) || 0;
-                const l = parseFloat(lInput.value) || 0;                
-                const volumen = b * h * l;
-                document.getElementById('volumen').value = volumen.toFixed(2);
-                calcularRendimiento();
-                calcularProductividad();
-            }
+            const totalPersonas = document.getElementById('total_personas');            
             
             
             // Función para calcular el total de personas
@@ -214,13 +180,14 @@
 
             // Función para calcular el rendimiento
             function calcularRendimiento() {
-                const volumen = parseFloat(volumenInput.value) || 0;
+                const cantidad = parseFloat(cantidadInput.value) || 0;
                 const tiempo = parseFloat(tiempoInput.value) || 0;
                 if (tiempo === 0) {
                     rendimientoInput.value = 0;
                 } else {
-                    rendimientoInput.value = (volumen / tiempo).toFixed(2);
+                    rendimientoInput.value = (cantidad / tiempo).toFixed(2);
                 }
+                calcularProductividad();
             }
 
             // Función para calcular la productividad
@@ -235,10 +202,8 @@
                 }
             }
 
-             // campos calculados cuando se modifican los campos principales
-            bInput.addEventListener('input', calcularvolumen);
-            hInput.addEventListener('input', calcularvolumen);
-            lInput.addEventListener('input', calcularvolumen);            
+             // campos calculados cuando se modifican los campos principales            
+            cantidadInput.addEventListener('input', calcularRendimiento);
             tiempoInput.addEventListener('input', calcularRendimiento);
             tiempoInput.addEventListener('input', calcularProductividad);                        
         });

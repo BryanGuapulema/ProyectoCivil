@@ -56,6 +56,7 @@
                     <div class="flex items-center justify-between mt-5">                        
                         <a href="{{ route('rubros_m2.index', ['obra_id' => $obra->id]) }}" class="bg-blue-500 hover:bg-blue-700 text-white font-bold py-2 px-4 rounded">Ver la lista de rubros m2</a>
                         <a href="{{ route('rubros_m3.index', ['obra_id' => $obra->id]) }}" class="bg-blue-500 hover:bg-blue-700 text-white font-bold py-2 px-4 rounded">Ver la lista de rubros m3</a>
+                        <a href="{{ route('rubros_pts.index', ['obra_id' => $obra->id]) }}" class="bg-blue-500 hover:bg-blue-700 text-white font-bold py-2 px-4 rounded">Ver la lista de rubros pts</a>
                     </div>
                     <!-- Botón Añadir Rubro -->
                     <div class="mt-4">
@@ -84,7 +85,7 @@
                         <div class="grid grid-cols-2 gap-4">
                             <button id="btn-m2" class="w-full px-4 py-2 bg-blue-600 border border-transparent rounded-md font-semibold text-xs text-white uppercase tracking-widest hover:bg-blue-700 active:bg-blue-900 focus:outline-none focus:border-blue-900 focus:ring focus:ring-blue-300 transition">m2</button>
                             <button id="btn-m3" class="w-full px-4 py-2 bg-blue-600 border border-transparent rounded-md font-semibold text-xs text-white uppercase tracking-widest hover:bg-blue-700 active:bg-blue-900 focus:outline-none focus:border-blue-900 focus:ring focus:ring-blue-300 transition">m3</button>
-                            <button id="btn-pts" class="w-full px-4 py-2 bg-blue-600 border border-transparent rounded-md font-semibold text-xs text-white uppercase tracking-widest hover:bg-blue-700 active:bg-blue-900 focus:outline-none focus:border-blue-900 focus:ring focus:ring-blue-300 transition">lts</button>
+                            <button id="btn-pts" class="w-full px-4 py-2 bg-blue-600 border border-transparent rounded-md font-semibold text-xs text-white uppercase tracking-widest hover:bg-blue-700 active:bg-blue-900 focus:outline-none focus:border-blue-900 focus:ring focus:ring-blue-300 transition">pts</button>
                             <button id="btn-kgs" class="w-full px-4 py-2 bg-blue-600 border border-transparent rounded-md font-semibold text-xs text-white uppercase tracking-widest hover:bg-blue-700 active:bg-blue-900 focus:outline-none focus:border-blue-900 focus:ring focus:ring-blue-300 transition">kgs</button>
                         </div>
                     </div>
@@ -119,8 +120,10 @@
         });
 
         document.getElementById('btn-pts').addEventListener('click', function() {
-            window.location.href = "{{ route('obras.create') }}";
+            var obraId = "{{ $obra->id }}";
+            window.location.href = "{{ route('rubros_pts.create', ['obra_id' => ':obra_id']) }}".replace(':obra_id', obraId);
         });
+        
 
         document.getElementById('btn-kgs').addEventListener('click', function() {
             window.location.href = "{{ route('obras.create') }}";

@@ -5,6 +5,7 @@ use App\Http\Controllers\HomeController;
 use App\Http\Controllers\ObraController;
 use App\Http\Controllers\RubroM2Controller;
 use App\Http\Controllers\RubroM3Controller;
+use App\Http\Controllers\RubroPTSController;
 use App\Http\Controllers\ObreroController;
 
 
@@ -48,6 +49,10 @@ Route::get('rubros_m2/create/{obra_id}', [RubroM2Controller::class, 'create'])->
 Route::resource('rubros_m3', RubroM3Controller::class);
 Route::get('rubros_m3/create/{obra_id}', [RubroM3Controller::class, 'create'])->name('rubros_m3.create');
 
+
+//RUBROPTS
+Route::resource('rubros_pts', RubroPTSController::class);
+Route::get('rubros_pts/create/{obra_id}', [RubroPTSController::class, 'create'])->name('rubros_pts.create');
 
 
 //InfoObreros
