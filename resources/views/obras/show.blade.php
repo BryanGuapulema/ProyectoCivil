@@ -53,8 +53,9 @@
                         <a href="{{ route('obras.index') }}" class="text-sm text-gray-600 dark:text-gray-400 underline">Volver a la lista de obras</a>
                     </div>
 
-                    <div class="flex items-center justify-between mt-5">
-                        <a href="{{ route('rubros_m2.index') }}" class="text-sm text-gray-600 dark:text-gray-400 underline">Ver a la lista de rubros</a>
+                    <div class="flex items-center justify-between mt-5">                        
+                        <a href="{{ route('rubros_m2.index', ['obra_id' => $obra->id]) }}" class="bg-blue-500 hover:bg-blue-700 text-white font-bold py-2 px-4 rounded">Ver la lista de rubros</a>
+
                     </div>
                     <!-- Botón Añadir Rubro -->
                     <div class="mt-4">

@@ -1,7 +1,7 @@
 <x-app-layout>
     <x-slot name="header">
         <h2 class="font-semibold text-xl text-gray-800 dark:text-gray-200 leading-tight">
-            {{ __('Añadir Rubro m²') }}
+            {{ __('Editar Rubro m²') }}
         </h2>
     </x-slot>
 
@@ -9,42 +9,43 @@
         <div class="max-w-7xl mx-auto sm:px-6 lg:px-8">
             <div class="bg-white dark:bg-gray-800 overflow-hidden shadow-xl sm:rounded-lg">
                 <div class="p-6 sm:px-20 bg-white dark:bg-gray-800 border-b border-gray-200 dark:border-gray-700">
-                    <form method="POST" action="{{ route('rubros_m2.store') }}" enctype="multipart/form-data">
+                    <form method="POST" action="{{ route('rubros_m2.update', $rubro->id) }}" enctype="multipart/form-data">
                         @csrf
+                        @method('PUT')
 
                         <div class="mb-4">
                             <x-label for="nombre" value="{{ __('Nombre') }}" class="text-gray-700 dark:text-gray-300"/>
                             <select id="nombre" name="nombre" required class="block mt-1 w-full dark:bg-gray-900 dark:text-gray-300">
-                                <option value="" disabled selected>Seleccione un nombre</option>
-                                <option value="Opción 1">Opción 1</option>
-                                <option value="Opción 2">Opción 2</option>
-                                <option value="Opción 3">Opción 3</option>
+                                <option value="" disabled>Seleccione un nombre</option>
+                                <option value="Opción 1" {{ $rubro->nombre == 'Opción 1' ? 'selected' : '' }}>Opción 1</option>
+                                <option value="Opción 2" {{ $rubro->nombre == 'Opción 2' ? 'selected' : '' }}>Opción 2</option>
+                                <option value="Opción 3" {{ $rubro->nombre == 'Opción 3' ? 'selected' : '' }}>Opción 3</option>
                             </select>
                         </div>
 
                         <div class="mb-4">
                             <x-label for="ancho" value="{{ __('Ancho (m)') }}" class="text-gray-700 dark:text-gray-300"/>
-                            <x-input id="ancho" type="number" value="0" step="0.01" name="ancho" required class="mt-1 block w-full dark:bg-gray-900 dark:text-gray-300"/>
+                            <x-input id="ancho" type="number" value="{{ $rubro->ancho }}" step="0.01" name="ancho" required class="mt-1 block w-full dark:bg-gray-900 dark:text-gray-300"/>
                         </div>
 
                         <div class="mb-4">
                             <x-label for="longitud" value="{{ __('Longitud (m)') }}" class="text-gray-700 dark:text-gray-300"/>
-                            <x-input id="longitud" type="number" value="0" step="0.01" name="longitud" required class="mt-1 block w-full dark:bg-gray-900 dark:text-gray-300"/>
+                            <x-input id="longitud" type="number" value="{{ $rubro->longitud }}" step="0.01" name="longitud" required class="mt-1 block w-full dark:bg-gray-900 dark:text-gray-300"/>
                         </div>
 
                         <div class="mb-4">
                             <x-label for="cantidad" value="{{ __('Cantidad (u)') }}" class="text-gray-700 dark:text-gray-300"/>
-                            <x-input id="cantidad" type="number" step="0.01" value="0" name="cantidad" required class="mt-1 block w-full dark:bg-gray-900 dark:text-gray-300"/>
+                            <x-input id="cantidad" type="number" step="0.01" value="{{ $rubro->cantidad }}" name="cantidad" required class="mt-1 block w-full dark:bg-gray-900 dark:text-gray-300"/>
                         </div>
 
                         <div class="mb-4">
                             <x-label for="area" value="{{ __('Área (m²)') }}" class="text-gray-700 dark:text-gray-300"/>
-                            <x-input id="area" type="number" step="0.01" name="area" readonly required class="mt-1 block w-full dark:bg-gray-900 dark:text-gray-300"/>
+                            <x-input id="area" type="number" step="0.01" value="{{ $rubro->area }}" name="area" readonly required class="mt-1 block w-full dark:bg-gray-900 dark:text-gray-300"/>
                         </div>
 
                         <div class="mb-4">
                             <x-label for="tiempo" value="{{ __('Tiempo (h)') }}" class="text-gray-700 dark:text-gray-300"/>
-                            <x-input id="tiempo" type="number" step="0.01" name="tiempo" required class="mt-1 block w-full dark:bg-gray-900 dark:text-gray-300"/>
+                            <x-input id="tiempo" type="number" step="0.01" value="{{ $rubro->tiempo }}" name="tiempo" required class="mt-1 block w-full dark:bg-gray-900 dark:text-gray-300"/>
                         </div>
                         
                         <div class="mb-4">
@@ -61,7 +62,7 @@
                             <div>
                                 <div class="flex items-center">
                                     <button type="button"  class="bg-blue-500 text-white px-4 py-2 rounded-md">{{ __('EO E2') }}</button>
-                                    <x-input id="eo_e2" type="number" name="eo_e2" class="mt-1 block w-full dark:bg-gray-900 dark:text-gray-300" value="0"/>
+                                    <x-input id="eo_e2" type="number" name="eo_e2" class="mt-1 block w-full dark:bg-gray-900 dark:text-gray-300" value="{{ $rubro->EO_E2 }}"/>
                                 </div>
                             </div>
 
@@ -69,7 +70,7 @@
                             <div>
                                 <div class="flex items-center">
                                     <button type="button"  class="bg-blue-500 text-white px-4 py-2 rounded-md">{{ __('EO D2') }}</button>
-                                    <x-input id="eo_d2" type="number" name="eo_d2" class="mt-1 block w-full dark:bg-gray-900 dark:text-gray-300" value="0"/>
+                                    <x-input id="eo_d2" type="number" name="eo_d2" class="mt-1 block w-full dark:bg-gray-900 dark:text-gray-300" value="{{ $rubro->EO_D2 }}"/>
                                 </div>
                             </div>
 
@@ -77,7 +78,7 @@
                             <div>
                                 <div class="flex items-center">
                                     <button type="button"  class="bg-blue-500 text-white px-4 py-2 rounded-md">{{ __('EO C2') }}</button>
-                                    <x-input id="eo_c2" type="number" name="eo_c2" class="mt-1 block w-full dark:bg-gray-900 dark:text-gray-300" value="0"/>
+                                    <x-input id="eo_c2" type="number" name="eo_c2" class="mt-1 block w-full dark:bg-gray-900 dark:text-gray-300" value="{{ $rubro->EO_C2 }}"/>
                                 </div>
                             </div>
 
@@ -85,7 +86,7 @@
                             <div>
                                 <div class="flex items-center">
                                     <button type="button"  class="bg-blue-500 text-white px-4 py-2 rounded-md">{{ __('EO C1') }}</button>
-                                    <x-input id="eo_c1" type="number" name="eo_c1" class="mt-1 block w-full dark:bg-gray-900 dark:text-gray-300" value="0"/>
+                                    <x-input id="eo_c1" type="number" name="eo_c1" class="mt-1 block w-full dark:bg-gray-900 dark:text-gray-300" value="{{ $rubro->EO_C1 }}"/>
                                 </div>
                             </div>
 
@@ -93,7 +94,7 @@
                             <div>
                                 <div class="flex items-center">
                                     <button type="button"  class="bg-blue-500 text-white px-4 py-2 rounded-md">{{ __('EO B3') }}</button>
-                                    <x-input id="eo_b3" type="number" name="eo_b3" class="mt-1 block w-full dark:bg-gray-900 dark:text-gray-300" value="0"/>
+                                    <x-input id="eo_b3" type="number" name="eo_b3" class="mt-1 block w-full dark:bg-gray-900 dark:text-gray-300" value="{{ $rubro->EO_B3 }}"/>
                                 </div>
                             </div>
 
@@ -101,52 +102,53 @@
                             <div>
                                 <div class="flex items-center">
                                     <button type="button"  class="bg-blue-500 text-white px-4 py-2 rounded-md">{{ __('EO B1') }}</button>
-                                    <x-input id="eo_b1" type="number" name="eo_b1" class="mt-1 block w-full dark:bg-gray-900 dark:text-gray-300" value="0"/>
+                                    <x-input id="eo_b1" type="number" name="eo_b1" class="mt-1 block w-full dark:bg-gray-900 dark:text-gray-300" value="{{ $rubro->EO_B1 }}"/>
                                 </div>
                             </div>
 
-                            <!-- Campo GRUPO I: EO C1 -->
+                            <!-- Campo Grupo I EO C1 -->
                             <div>
                                 <div class="flex items-center">
-                                    <button type="button"  class="bg-blue-500 text-white px-4 py-2 rounded-md">{{ __('GRUPO I: EO C1') }}</button>
-                                    <x-input id="grupo_i_eo_c1" type="number" name="grupo_i_eo_c1" class="mt-1 block w-full dark:bg-gray-900 dark:text-gray-300" value="0"/>
+                                    <button type="button"  class="bg-blue-500 text-white px-4 py-2 rounded-md">{{ __('Grupo I EO C1') }}</button>
+                                    <x-input id="grupo_i_eo_c1" type="number" name="grupo_i_eo_c1" class="mt-1 block w-full dark:bg-gray-900 dark:text-gray-300" value="{{ $rubro->GRUPO_I_EO_C1 }}"/>
                                 </div>
                             </div>
 
-                            <!-- Campo GRUPO II: EO C2 -->
+                            <!-- Campo Grupo II EO C2 -->
                             <div>
                                 <div class="flex items-center">
-                                    <button type="button"  class="bg-blue-500 text-white px-4 py-2 rounded-md">{{ __('GRUPO II: EO C2') }}</button>
-                                    <x-input id="grupo_ii_eo_c2" type="number" name="grupo_ii_eo_c2" class="mt-1 block w-full dark:bg-gray-900 dark:text-gray-300" value="0"/>
+                                    <button type="button"  class="bg-blue-500 text-white px-4 py-2 rounded-md">{{ __('Grupo II EO C2') }}</button>
+                                    <x-input id="grupo_ii_eo_c2" type="number" name="grupo_ii_eo_c2" class="mt-1 block w-full dark:bg-gray-900 dark:text-gray-300" value="{{ $rubro->GRUPO_II_EO_C2 }}"/>
                                 </div>
                             </div>
                         </div>
 
                         <div class="mb-4">
-                            <x-label for="total_personas" value="{{ __('Total de personas (H)') }}" class="text-gray-700 dark:text-gray-300"/>
-                            <x-input id="total_personas" type="number" step="1" name="total_personas" readonly required class="mt-1 block w-full dark:bg-gray-900 dark:text-gray-300"/>
+                            <x-label for="total_personas" value="{{ __('Total de Personas (H)') }}" class="text-gray-700 dark:text-gray-300"/>
+                            <x-input id="total_personas" type="number" step="0.01" value="{{ $rubro->total_personas }}" name="total_personas" required class="mt-1 block w-full dark:bg-gray-900 dark:text-gray-300"/>
                         </div>
 
                         <div class="mb-4">
                             <x-label for="rendimiento" value="{{ __('Rendimiento (m²/h)') }}" class="text-gray-700 dark:text-gray-300"/>
-                            <x-input id="rendimiento" type="number" step="0.01" name="rendimiento" required class="mt-1 block w-full dark:bg-gray-900 dark:text-gray-300"/>
+                            <x-input id="rendimiento" type="number" step="0.01" value="{{ $rubro->rendimiento }}" name="rendimiento" readonly required class="mt-1 block w-full dark:bg-gray-900 dark:text-gray-300"/>
                         </div>
 
                         <div class="mb-4">
                             <x-label for="productividad" value="{{ __('Productividad (m²/h*H)') }}" class="text-gray-700 dark:text-gray-300"/>
-                            <x-input id="productividad" type="number" step="0.01" name="productividad" required class="mt-1 block w-full dark:bg-gray-900 dark:text-gray-300"/>
+                            <x-input id="productividad" type="number" step="0.01" value="{{ $rubro->productividad }}" name="productividad" readonly required class="mt-1 block w-full dark:bg-gray-900 dark:text-gray-300"/>
                         </div>
 
                         <div class="mb-4">
-                            <x-label for="evidencia" value="{{ __('Evidencia (imagen)') }}" class="text-gray-700 dark:text-gray-300"/>
-                            <input id="evidencia" type="file" name="evidencia" accept="image/*" required class="mt-1 block w-full text-gray-700 dark:text-gray-300 dark:bg-gray-900"/>
+                            <x-label for="evidencia" value="{{ __('Evidencia') }}" class="text-gray-700 dark:text-gray-300"/>
+                            <input type="file" id="evidencia" name="evidencia" class="mt-1 block w-full dark:bg-gray-900 dark:text-gray-300"/>
+                            @if($rubro->evidencia)
+                                <img src="{{ asset('storage/evidencias/rubrosm2/' . $rubro->evidencia) }}" alt="Evidencia actual" class="mt-4 rounded-lg">
+                            @endif
                         </div>
 
-                        <input type="hidden" name="obra_id" value="{{ $obra->id }}">
-
-                        <div class="flex items-center justify-between">
-                            <x-button>
-                                {{ __('Guardar Rubro') }}
+                        <div class="flex justify-end mt-6">
+                            <x-button class="ml-4">
+                                {{ __('Actualizar') }}
                             </x-button>
                         </div>
                     </form>
@@ -226,5 +228,4 @@
             tiempoInput.addEventListener('input', calcularProductividad);                        
         });
     </script>
-    
 </x-app-layout>

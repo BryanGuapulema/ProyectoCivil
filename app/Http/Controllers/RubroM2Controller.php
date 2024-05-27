@@ -5,6 +5,7 @@ namespace App\Http\Controllers;
 use Illuminate\Http\Request;
 use App\Models\RubroM2;
 use App\Models\Obra;
+use Illuminate\Support\Facades\Storage;
 
 
 class RubroM2Controller extends Controller
@@ -12,9 +13,13 @@ class RubroM2Controller extends Controller
     /**
      * Display a listing of the resource.
      */
-    public function index()
-    {
-        $rubrosM2 = RubroM2::all();
+    public function index(Request $request)
+    {        
+        $obra_id = $request->input('obra_id');
+        // Filtrar los rubros por el ID de la obra
+        $rubrosM2 = RubroM2::where('obra_id', $obra_id)->get();
+
+        //$rubrosM2 = RubroM2::all();
         return view('rubros.m2.index', compact('rubrosM2'));
     }
 
@@ -99,22 +104,70 @@ class RubroM2Controller extends Controller
      */
     public function edit(string $id)
     {
-        //
+        $rubro = RubroM2::findOrFail($id);
+        $obra = Obra::findOrFail($rubro->obra_id);
+
+        return view('rubros.m2.edit', compact('rubro', 'obra'));
     }
 
     /**
      * Update the specified resource in storage.
      */
-    public function update(Request $request, string $id)
+    public function update(Request $request, $id)
     {
-        //
-    }
+        // Validar los datos del formulario
+        $validatedData = $request->validate([
+            'nombre' => 'required|string',
+            'ancho' => 'required|numeric',
+            'longitud' => 'required|numeric',
+            'cantidad' => 'required|numeric',
+            'area' => 'required|numeric',
+            'tiempo' => 'required|numeric',
+            'total_personas' => 'required|integer',
+            'rendimiento' => 'required|numeric',
+            'productividad' => 'required|numeric',
+            'evidencia' => 'image|mimes:jpeg,png,jpg,gif|max:2048',
+            'eo_e2' => 'nullable|integer',
+            'eo_d2' => 'nullable|integer',
+            'eo_c2' => 'nullable|integer',
+            'eo_c1' => 'nullable|integer',
+            'eo_b3' => 'nullable|integer',
+            'eo_b1' => 'nullable|integer',
+            'grupo_i_eo_c1' => 'nullable|integer',
+            'grupo_ii_eo_c2' => 'nullable|integer',
+        ]);
 
+        $rubro = RubroM2::findOrFail($id);
+
+        // Verificar si se ha subido una nueva imagen
+        if ($request->hasFile('evidencia')) {
+            $imageName = time() . '.' . $request->evidencia->extension();
+            $request->evidencia->storeAs('evidencias/rubrosm2', $imageName, 'public'); // Asegurar que se guarda en 'public' disk
+            $validatedData['evidencia'] = $imageName;
+        }
+
+        // Actualizar el rubro_m2 en la base de datos con los datos validados
+        $rubro->update($validatedData);
+
+        return redirect()->route('rubros_m2.index')->with('success', 'Rubro m² actualizado correctamente');
+    }
     /**
      * Remove the specified resource from storage.
      */
-    public function destroy(string $id)
+    public function destroy($id)
     {
-        //
+        // Buscar el rubro_m2 por ID
+        $rubro = RubroM2::findOrFail($id);
+
+        // Eliminar la imagen asociada si existe
+        if ($rubro->evidencia) {
+            Storage::disk('public')->delete('evidencias/rubrosm2/' . $rubro->evidencia);
+        }
+
+        // Eliminar el rubro_m2 de la base de datos
+        $rubro->delete();
+
+        // Redirigir a la vista de la lista de rubros_m2 con un mensaje de éxito
+        return redirect()->route('rubros_m2.index')->with('success', 'Rubro m² eliminado correctamente');
     }
 }
