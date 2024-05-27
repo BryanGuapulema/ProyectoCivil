@@ -29,4 +29,9 @@ class Obra extends Model
     {
         return $this->hasMany(RubroM2::class);
     }
+
+    public function rubros_m3()
+    {
+        return $this->hasMany(RubroM3::class);
+    }
 }
