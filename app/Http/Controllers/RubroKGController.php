@@ -3,11 +3,11 @@
 namespace App\Http\Controllers;
 
 use Illuminate\Http\Request;
-use App\Models\RubroM3;
+use App\Models\RubroKG;
 use App\Models\Obra;
 use Illuminate\Support\Facades\Storage;
 
-class RubroM3Controller extends Controller
+class RubroKGController extends Controller
 {
     /**
      * Display a listing of the resource.
@@ -16,8 +16,8 @@ class RubroM3Controller extends Controller
     {        
         $obra_id = $request->input('obra_id');
         // Filtrar los rubros por el ID de la obra
-        $rubrosM3 = RubroM3::where('obra_id', $obra_id)->get();
-        return view('rubros.m3.index', compact('rubrosM3'));
+        $rubrosKG = RubroKG::where('obra_id', $obra_id)->get();
+        return view('rubros.kg.index', compact('rubrosKG'));
     }
 
     /**
@@ -28,7 +28,7 @@ class RubroM3Controller extends Controller
         // Buscar la obra correspondiente
         $obra = Obra::findOrFail($obra_id);
 
-        return view('rubros.m3.create', compact('obra'));
+        return view('rubros.kg.create', compact('obra'));
     }
 
     /**
@@ -40,13 +40,11 @@ class RubroM3Controller extends Controller
         $validatedData = $request->validate([
             'obra_id' => 'required|exists:obras,id',
             'nombre' => 'required|string',
-            'b' => 'required|numeric',
-            'h' => 'required|numeric',
-            'l' => 'required|numeric',
-            'cantidad' => 'required|numeric',
-            'hlosa' => 'required|numeric',
-            'factor_conversion' => 'required|numeric',
-            'volumen' => 'required|numeric',
+            'denominacion' => 'required|string', 
+            'cantidad' => 'required|integer',
+            'longitud' => 'required|numeric',                        
+            'kgm' => 'required|numeric',                        
+            'peso' => 'required|numeric',           
             'tiempo' => 'required|numeric',
             'eo_e2' => 'required|numeric',
             'eo_d2' => 'required|numeric',
@@ -64,19 +62,17 @@ class RubroM3Controller extends Controller
 
         // Guardar la imagen en la carpeta storage
         $imageName = time() . '.' . $request->evidencia->extension();
-        $request->evidencia->storeAs('/evidencias/rubrosm3', $imageName);
+        $request->evidencia->storeAs('/evidencias/rubroskg', $imageName);
 
         // Crear el nuevo rubro_m3 en la base de datos
-        $rubro = new RubroM3();
+        $rubro = new RubroKG();
         $rubro->obra_id = $validatedData['obra_id'];
         $rubro->nombre = $validatedData['nombre'];
-        $rubro->b = $validatedData['b'];
-        $rubro->h = $validatedData['h'];
-        $rubro->l = $validatedData['l'];
-        $rubro->cantidad = $validatedData['cantidad'];
-        $rubro->hlosa = $validatedData['hlosa'];
-        $rubro->factor_conversion = $validatedData['factor_conversion'];
-        $rubro->volumen = $validatedData['volumen'];
+        $rubro->denominacion = $validatedData['denominacion'];        
+        $rubro->cantidad = $validatedData['cantidad']; 
+        $rubro->longitud = $validatedData['longitud']; 
+        $rubro->kgm = $validatedData['kgm']; 
+        $rubro->peso = $validatedData['peso'];         
         $rubro->tiempo = $validatedData['tiempo'];
         $rubro->eo_e2 = $validatedData['eo_e2'];
         $rubro->eo_d2 = $validatedData['eo_d2'];
@@ -92,7 +88,7 @@ class RubroM3Controller extends Controller
         $rubro->evidencia = $imageName;        
         $rubro->save();
 
-        return redirect()->route('obras.show', $validatedData['obra_id'])->with('success', 'Rubro m3 creado correctamente');
+        return redirect()->route('obras.show', $validatedData['obra_id'])->with('success', 'Rubro kg creado correctamente');
     }
 
     /**
@@ -108,10 +104,10 @@ class RubroM3Controller extends Controller
      */
     public function edit(string $id)
     {
-        $rubro = RubroM3::findOrFail($id);
+        $rubro = RubroKG::findOrFail($id);
         $obra = Obra::findOrFail($rubro->obra_id);
 
-        return view('rubros.m3.edit', compact('rubro', 'obra'));
+        return view('rubros.kg.edit', compact('rubro', 'obra'));
     }
 
     /**
@@ -122,11 +118,11 @@ class RubroM3Controller extends Controller
         // Validar los datos del formulario
         $validatedData = $request->validate([
             'nombre' => 'required|string',
-            'b' => 'required|numeric',
-            'h' => 'required|numeric',
-            'l' => 'required|numeric',
-            'cantidad' => 'required|numeric',
-            'volumen' => 'required|numeric',
+            'denominacion' => 'required|string', 
+            'cantidad' => 'required|integer',
+            'longitud' => 'required|numeric',                        
+            'kgm' => 'required|numeric',                        
+            'peso' => 'required|numeric',           
             'tiempo' => 'required|numeric',
             'total_personas' => 'required|integer',
             'rendimiento' => 'required|numeric',
@@ -142,38 +138,37 @@ class RubroM3Controller extends Controller
             'grupo_ii_eo_c2' => 'nullable|integer',
         ]);
 
-        $rubro = RubroM3::findOrFail($id);
+        $rubro = RubroKG::findOrFail($id);
 
         // Verificar si se ha subido una nueva imagen
         if ($request->hasFile('evidencia')) {
             $imageName = time() . '.' . $request->evidencia->extension();
-            $request->evidencia->storeAs('evidencias/rubrosm3', $imageName, 'public'); // Asegurar que se guarda en 'public' disk
+            $request->evidencia->storeAs('evidencias/rubroskg', $imageName, 'public'); // Asegurar que se guarda en 'public' disk
             $validatedData['evidencia'] = $imageName;
         }
 
-        // Actualizar el rubro_m3 en la base de datos con los datos validados
+        // Actualizar el rubro_pts en la base de datos con los datos validados
         $rubro->update($validatedData);
 
-        return redirect()->route('obras.index')->with('success', 'Rubro m3 actualizado correctamente');
+        return redirect()->route('obras.index')->with('success', 'Rubro kg actualizado correctamente');
     }
-
     /**
      * Remove the specified resource from storage.
      */
     public function destroy($id)
     {
-        // Buscar el rubro_m2 por ID
-        $rubro = RubroM3::findOrFail($id);
+        // Buscar el rubro_pts por ID
+        $rubro = RubroKG::findOrFail($id);
 
         // Eliminar la imagen asociada si existe
         if ($rubro->evidencia) {
-            Storage::disk('public')->delete('evidencias/rubrosm3/' . $rubro->evidencia);
+            Storage::disk('public')->delete('evidencias/rubroskg/' . $rubro->evidencia);
         }
 
-        // Eliminar el rubro_m2 de la base de datos
+        // Eliminar el rubro_pts de la base de datos
         $rubro->delete();
 
-        // Redirigir a la vista de la lista de rubros_m2 con un mensaje de éxito
-        return redirect()->route('obras.index')->with('success', 'Rubro m3 eliminado correctamente');
+        // Redirigir a la vista de la lista de rubros_pts con un mensaje de éxito
+        return redirect()->route('obras.index')->with('success', 'Rubro pts eliminado correctamente');
     }
 }

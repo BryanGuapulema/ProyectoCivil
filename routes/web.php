@@ -7,7 +7,7 @@ use App\Http\Controllers\RubroM2Controller;
 use App\Http\Controllers\RubroM3Controller;
 use App\Http\Controllers\RubroPTSController;
 use App\Http\Controllers\ObreroController;
-
+use App\Http\Controllers\RubroKGController;
 
 Route::get('/', function () {
     return view('welcome');
@@ -55,6 +55,12 @@ Route::resource('rubros_pts', RubroPTSController::class);
 Route::get('rubros_pts/create/{obra_id}', [RubroPTSController::class, 'create'])->name('rubros_pts.create');
 
 
+
+//RUBROKG
+Route::resource('rubros_kg', RubroKGController::class);
+Route::get('rubros_kg/create/{obra_id}', [RubroKGController::class, 'create'])->name('rubros_kg.create');
+
+
 //InfoObreros
-Route::resource('obreros', ObreroController::class);
+//Route::resource('obreros', ObreroController::class);
 

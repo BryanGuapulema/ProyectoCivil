@@ -34,4 +34,14 @@ class Obra extends Model
     {
         return $this->hasMany(RubroM3::class);
     }
+
+    public function rubros_pts()
+    {
+        return $this->hasMany(RubroPTS::class);
+    }
+
+    public function rubros_kg()
+    {
+        return $this->hasMany(RubroKG::class);
+    }
 }

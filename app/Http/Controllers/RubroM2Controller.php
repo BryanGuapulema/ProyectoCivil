@@ -149,7 +149,7 @@ class RubroM2Controller extends Controller
         // Actualizar el rubro_m2 en la base de datos con los datos validados
         $rubro->update($validatedData);
 
-        return redirect()->route('rubros_m2.index')->with('success', 'Rubro m² actualizado correctamente');
+        return redirect()->route('obras.index')->with('success', 'Rubro m² actualizado correctamente');
     }
     /**
      * Remove the specified resource from storage.
@@ -168,6 +168,6 @@ class RubroM2Controller extends Controller
         $rubro->delete();
 
         // Redirigir a la vista de la lista de rubros_m2 con un mensaje de éxito
-        return redirect()->route('rubros_m2.index')->with('success', 'Rubro m² eliminado correctamente');
+        return redirect()->route('obras.index')->with('success', 'Rubro m² eliminado correctamente');
     }
 }

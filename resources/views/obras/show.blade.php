@@ -57,6 +57,7 @@
                         <a href="{{ route('rubros_m2.index', ['obra_id' => $obra->id]) }}" class="bg-blue-500 hover:bg-blue-700 text-white font-bold py-2 px-4 rounded">Ver la lista de rubros m2</a>
                         <a href="{{ route('rubros_m3.index', ['obra_id' => $obra->id]) }}" class="bg-blue-500 hover:bg-blue-700 text-white font-bold py-2 px-4 rounded">Ver la lista de rubros m3</a>
                         <a href="{{ route('rubros_pts.index', ['obra_id' => $obra->id]) }}" class="bg-blue-500 hover:bg-blue-700 text-white font-bold py-2 px-4 rounded">Ver la lista de rubros pts</a>
+                        <a href="{{ route('rubros_kg.index', ['obra_id' => $obra->id]) }}" class="bg-blue-500 hover:bg-blue-700 text-white font-bold py-2 px-4 rounded">Ver la lista de rubros kg</a>
                     </div>
                     <!-- Botón Añadir Rubro -->
                     <div class="mt-4">
@@ -123,10 +124,11 @@
             var obraId = "{{ $obra->id }}";
             window.location.href = "{{ route('rubros_pts.create', ['obra_id' => ':obra_id']) }}".replace(':obra_id', obraId);
         });
-        
 
         document.getElementById('btn-kgs').addEventListener('click', function() {
-            window.location.href = "{{ route('obras.create') }}";
+            var obraId = "{{ $obra->id }}";
+            window.location.href = "{{ route('rubros_kg.create', ['obra_id' => ':obra_id']) }}".replace(':obra_id', obraId);
         });
+                
     </script>
 </x-app-layout>

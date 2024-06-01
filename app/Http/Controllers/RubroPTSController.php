@@ -141,7 +141,7 @@ class RubroPTSController extends Controller
         // Actualizar el rubro_pts en la base de datos con los datos validados
         $rubro->update($validatedData);
 
-        return redirect()->route('rubros_pts.index')->with('success', 'Rubro pts actualizado correctamente');
+        return redirect()->route('obras.index')->with('success', 'Rubro pts actualizado correctamente');
     }
     /**
      * Remove the specified resource from storage.
@@ -160,6 +160,6 @@ class RubroPTSController extends Controller
         $rubro->delete();
 
         // Redirigir a la vista de la lista de rubros_pts con un mensaje de éxito
-        return redirect()->route('rubros_pts.index')->with('success', 'Rubro pts eliminado correctamente');
+        return redirect()->route('obras.index')->with('success', 'Rubro pts eliminado correctamente');
     }
 }
